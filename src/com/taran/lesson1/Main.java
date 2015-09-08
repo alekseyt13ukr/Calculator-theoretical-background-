@@ -7,6 +7,6 @@ public class Main {
         System.out.println("This is parsed string on elements: " + parser.separateString());
         System.out.println("This is reverse polish notation: " + parser.parse());
         CountMathString countMathString = new CountMathString(parser.parse());
-        System.out.println("1+2*4-5+(5*111) = " + countMathString.countString());
+        System.out.println("1+2*(5-3)+(5*111) = " + countMathString.countString());
     }
 }
