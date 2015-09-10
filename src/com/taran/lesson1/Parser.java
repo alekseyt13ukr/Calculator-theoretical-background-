@@ -65,7 +65,7 @@ public class Parser {
                             }
 
                             if (stack.readTop().equals("(")) {
-                                stack.deleteElement();
+                                stack.pop();
                             }
                             break;
                     }

@@ -54,4 +54,8 @@ public class CountMathString {
         String valuesForReplaceInString = String.valueOf(valuesForReplace);
         listOfElements.add(positionForReplace, valuesForReplaceInString);
     }
+
+    public List<String> getListOfElements() {
+        return listOfElements;
+    }
 }

@@ -28,7 +28,11 @@ public class Stack {
         return stack[top];
     }
 
-    public String deleteElement() {
-        return stack[top--];
+    public int getTop() {
+        return top;
+    }
+
+    public void setTop(int top) {
+        this.top = top;
     }
 }
