@@ -6,9 +6,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class CountMathStringTest {
+public class EvaluatorMStrTest {
 
-    static CountMathString countMathString;
+    static EvaluatorMStr evaluatorMStr;
     static Parser parser;
 
     @BeforeClass
@@ -20,11 +20,11 @@ public class CountMathStringTest {
 
     @Before
     public void setUp() {
-        countMathString = new CountMathString(parser.parse());
+        evaluatorMStr = new EvaluatorMStr(parser.parseInPolishReverse());
     }
 
     @Test
     public void countMathStringTest() {
-        assertEquals("10", countMathString.countString());
+        assertEquals("10", evaluatorMStr.countString());
     }
 }

@@ -7,65 +7,67 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-    private String mathString;
-    private List<String> listOfElements = new ArrayList<>();
-    Stack stack;
+    private String sourceMathString;
+    private List<String> mStringElementsApart;
+    private List outputList;
+    private Stack stackForSign;
 
     public Parser(String mathString) {
-        this.mathString = mathString;
-        stack = new Stack(mathString.length());
+        this.sourceMathString = mathString;
+        this.outputList = new ArrayList(mathString.length());
+        this.stackForSign = new Stack(mathString.length());
+        this.mStringElementsApart = new ArrayList<>();
     }
 
     public List separateString() {
         Pattern pattern = Pattern.compile("\\W|\\d+");
-        Matcher matcher = pattern.matcher(mathString);
+        Matcher matcher = pattern.matcher(sourceMathString);
 
         while (matcher.find()) {
-            listOfElements.add(matcher.group());
+            mStringElementsApart.add(matcher.group());
         }
 
-        return listOfElements;
+        return mStringElementsApart;
     }
 
-    public List parse() {
+    public List parseInPolishReverse() {
         Pattern patternNumber = Pattern.compile("\\d+");
-        List<String> outputPhrase = new ArrayList<>();
 
-        for (String currentElement: listOfElements) {
+        for (String currentElement: mStringElementsApart) {
             Matcher matcherNumber = patternNumber.matcher(currentElement);
             if (matcherNumber.find()) {
-                outputPhrase.add(matcherNumber.group());
+                outputList.add(matcherNumber.group());
             } else {
-                if (stack.isEmpty()) {
-                    stack.push(currentElement);
+                if (stackForSign.isEmpty()) {
+                    stackForSign.push(currentElement);
                 } else {
                     switch (currentElement) {
                         case ("+"):
                         case ("-"):
-                            if (stack.readTop().equals("(")) {
-                                stack.push(currentElement);
+                            if (stackForSign.readTop().equals("(")) {
+                                stackForSign.push(currentElement);
                             } else {
-                                while (!stack.isEmpty() && !stack.readTop().equals("(")) {
-                                    outputPhrase.add(stack.pop());
+                                while (!stackForSign.isEmpty() && !stackForSign.readTop().equals("(")) {
+                                    outputList.add(stackForSign.pop());
                                 }
-                                stack.push(currentElement);
+                                stackForSign.push(currentElement);
                             }
                             break;
                         case ("*"):
                         case ("/"):
-                            stack.push(currentElement);
+                            stackForSign.push(currentElement);
                             break;
                         case ("("):
-                            stack.push(currentElement);
+                            stackForSign.push(currentElement);
                             break;
                         case (")"):
 
-                            while (!stack.readTop().equals("(")) {
-                                outputPhrase.add(stack.pop());
+                            while (!stackForSign.readTop().equals("(")) {
+                                outputList.add(stackForSign.pop());
                             }
 
-                            if (stack.readTop().equals("(")) {
-                                stack.pop();
+                            if (stackForSign.readTop().equals("(")) {
+                                stackForSign.pop();
                             }
                             break;
                     }
@@ -73,11 +75,12 @@ public class Parser {
             }
         }
 
-        while (!stack.isEmpty()) {
-            String pop = stack.pop();
-            outputPhrase.add(pop);
+        while (!stackForSign.isEmpty()) {
+            outputList.add(stackForSign.pop());
         }
-        return outputPhrase;
+
+        return outputList;
     }
 }
+
 

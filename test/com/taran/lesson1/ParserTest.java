@@ -37,6 +37,6 @@ public class ParserTest {
         listOfElements.add("*");
         listOfElements.add("+");
         parser.separateString();
-        assertEquals(listOfElements, parser.parse());
+        assertEquals(listOfElements, parser.parseInPolishReverse());
     }
 }
