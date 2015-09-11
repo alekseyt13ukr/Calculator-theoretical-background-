@@ -6,25 +6,25 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class EvaluatorMStrTest {
+public class EvaluatorFullExpressionTest {
 
-    static EvaluatorMStr evaluatorMStr;
+    static EvaluatorFullExpression evaluatorFullExpression;
     static Parser parser;
 
     @BeforeClass
     public static void setUpClass() {
         parser = new Parser("2-1+(1*9)");
-        parser.separateString();
+        parser.splitExpression();
 
     }
 
     @Before
     public void setUp() {
-        evaluatorMStr = new EvaluatorMStr(parser.parseInPolishReverse());
+        evaluatorFullExpression = new EvaluatorFullExpression(parser.parseInPolishReverse());
     }
 
     @Test
     public void countMathStringTest() {
-        assertEquals("10", evaluatorMStr.countString());
+        assertEquals("10", evaluatorFullExpression.calculateExpression());
     }
 }

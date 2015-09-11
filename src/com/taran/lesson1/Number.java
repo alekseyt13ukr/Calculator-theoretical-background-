@@ -2,14 +2,13 @@ package com.taran.lesson1;
 
 public class Number {
 
-    private String numberStr;
+    private int value;
 
-    public Number(String numberStr) {
-        this.numberStr = numberStr;
+    public Number(String value) {
+        this.value = Integer.parseInt(value);
     }
 
-    public int parseInt() {
-        int numberInt = Integer.parseInt(numberStr);
-        return numberInt;
+    public int getValue() {
+        return value;
     }
 }

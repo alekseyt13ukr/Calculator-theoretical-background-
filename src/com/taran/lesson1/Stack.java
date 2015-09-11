@@ -31,8 +31,4 @@ public class Stack {
     public int getTop() {
         return top;
     }
-
-    public void setTop(int top) {
-        this.top = top;
-    }
 }

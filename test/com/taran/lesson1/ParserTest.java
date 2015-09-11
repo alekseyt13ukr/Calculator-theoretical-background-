@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -20,23 +21,13 @@ public class ParserTest {
     }
 
     @Test
-    public void separateStringTest() {
-        listOfElements.add("3");
-        listOfElements.add("+");
-        listOfElements.add("4");
-        listOfElements.add("*");
-        listOfElements.add("111");
-        assertEquals(listOfElements, parser.separateString());
+    public void decompositionStringTest() {
+        assertEquals(new ArrayList(Arrays.asList("3", "+", "4", "*", "111")), parser.splitExpression());
     }
 
     @Test
     public void parseTest() {
-        listOfElements.add("3");
-        listOfElements.add("4");
-        listOfElements.add("111");
-        listOfElements.add("*");
-        listOfElements.add("+");
-        parser.separateString();
-        assertEquals(listOfElements, parser.parseInPolishReverse());
+        parser.splitExpression();
+        assertEquals(new ArrayList(Arrays.asList("3", "4", "111", "*", "+")), parser.parseInPolishReverse());
     }
 }

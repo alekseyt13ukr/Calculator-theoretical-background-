@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class Parser {
 
     private String sourceMathString;
-    private List<String> mStringElementsApart;
+    private List<String> apartElementsOfExpression;
     private List outputList;
     private Stack stackForSign;
 
@@ -16,24 +16,24 @@ public class Parser {
         this.sourceMathString = mathString;
         this.outputList = new ArrayList(mathString.length());
         this.stackForSign = new Stack(mathString.length());
-        this.mStringElementsApart = new ArrayList<>();
+        this.apartElementsOfExpression = new ArrayList<>();
     }
 
-    public List separateString() {
+    public List splitExpression() {
         Pattern pattern = Pattern.compile("\\W|\\d+");
         Matcher matcher = pattern.matcher(sourceMathString);
 
         while (matcher.find()) {
-            mStringElementsApart.add(matcher.group());
+            apartElementsOfExpression.add(matcher.group());
         }
 
-        return mStringElementsApart;
+        return apartElementsOfExpression;
     }
 
     public List parseInPolishReverse() {
         Pattern patternNumber = Pattern.compile("\\d+");
 
-        for (String currentElement: mStringElementsApart) {
+        for (String currentElement: apartElementsOfExpression) {
             Matcher matcherNumber = patternNumber.matcher(currentElement);
             if (matcherNumber.find()) {
                 outputList.add(matcherNumber.group());
