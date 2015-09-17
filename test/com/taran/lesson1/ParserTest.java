@@ -27,7 +27,7 @@ public class ParserTest {
 
     @Test
     public void parseTest() {
-        parser.splitExpression();
+//        parser.splitExpression();
         assertEquals(new ArrayList(Arrays.asList("3", "4", "111", "*", "+")), parser.parseInPolishReverse());
     }
 }

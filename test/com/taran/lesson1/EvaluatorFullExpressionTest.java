@@ -14,8 +14,6 @@ public class EvaluatorFullExpressionTest {
     @BeforeClass
     public static void setUpClass() {
         parser = new Parser("2-1+(1*9)");
-        parser.splitExpression();
-
     }
 
     @Before

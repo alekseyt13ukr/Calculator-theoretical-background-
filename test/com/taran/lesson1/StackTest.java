@@ -17,7 +17,7 @@ public class StackTest {
 
     @Before
     public void setUp() {
-        List list = new ArrayList(Arrays.asList("test1", "test2", "test3"));
+        list = new ArrayList(Arrays.asList("test1", "test2", "test3"));
         stack = new Stack(list.size());
     }
 

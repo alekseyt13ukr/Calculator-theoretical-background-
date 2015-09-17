@@ -17,7 +17,8 @@ public class Stack {
     }
 
     public String pop() {
-        return stack[top--];
+        String result = stack[top--];
+        return result;
     }
 
     public boolean isEmpty() {
