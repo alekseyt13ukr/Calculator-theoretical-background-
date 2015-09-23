@@ -1,15 +1,15 @@
 package com.taran.lesson1;
 
-public class Stack {
+public class Stack<E> {
 
     private int size;
-    private int top;
-    String[] stack;
+    private static int top;
+    private String[] stack;
 
     public Stack(int size) {
         this.size = size;
-        stack = new String[size];
-        top = -1;
+        this.stack = new String[size];
+        this.top = -1;
     }
 
     public void push(String currentElement) {
