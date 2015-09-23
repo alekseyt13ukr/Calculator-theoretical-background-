@@ -7,14 +7,14 @@ import java.util.regex.Pattern;
 public class EvaluatorFullExpression {
 
     private List<String> expressionPrefixView;
-    private Stack stack;
+    private Stack<String> stack;
 
     private static final Pattern PATTERN_SIGN = Pattern.compile("\\W");
     private static final Pattern PATTERN_NUMBER = Pattern.compile("\\d+");
 
     public EvaluatorFullExpression(List expressionPrefixView) {
         this.expressionPrefixView = expressionPrefixView;
-        this.stack = new Stack(expressionPrefixView.size());
+        this.stack = new Stack<String>(expressionPrefixView.size());
     }
 
     public String calculateExpression() {

@@ -12,13 +12,13 @@ import static org.junit.Assert.*;
 
 public class StackTest {
 
-    private Stack stack;
+    private Stack<String> stack;
     private List<String> list;
 
     @Before
     public void setUp() {
         list = new ArrayList(Arrays.asList("test1", "test2", "test3"));
-        stack = new Stack(list.size());
+        stack = new Stack<String>(list.size());
     }
 
     @Test

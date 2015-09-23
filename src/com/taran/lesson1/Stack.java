@@ -4,20 +4,20 @@ public class Stack<E> {
 
     private int size;
     private static int top;
-    private String[] stack;
+    private E[] stack;
 
     public Stack(int size) {
         this.size = size;
-        this.stack = new String[size];
+        this.stack = (E[]) new Object[size];
         this.top = -1;
     }
 
-    public void push(String currentElement) {
+    public void push(E currentElement) {
         stack[++top] = currentElement;
     }
 
-    public String pop() {
-        String result = stack[top--];
+    public E pop() {
+        E result = stack[top--];
         return result;
     }
 
@@ -25,7 +25,7 @@ public class Stack<E> {
         return top == -1;
     }
 
-    public String readTop() {
+    public E readTop() {
         return stack[top];
     }
 

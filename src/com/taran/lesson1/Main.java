@@ -1,9 +1,5 @@
 package com.taran.lesson1;
 
-import java.util.*;
-import java.util.Stack;
-import java.util.concurrent.ConcurrentHashMap;
-
 public class Main {
 
     public static void main(String[] args) {
