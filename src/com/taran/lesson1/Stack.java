@@ -1,34 +1,35 @@
 package com.taran.lesson1;
 
-public class Stack {
+public class Stack<E> {
 
     private int size;
-    private int top;
-    String[] stack;
+    private static int top;
+    private E[] stack;
 
     public Stack(int size) {
         this.size = size;
-        stack = new String[size];
-        top = -1;
+        this.stack = (E[]) new Object[size];
+        this.top = -1;
     }
 
-    public void push(String currentElement) {
+    public void push(E currentElement) {
         stack[++top] = currentElement;
     }
 
-    public String pop() {
-        return stack[top--];
+    public E pop() {
+        E result = stack[top--];
+        return result;
     }
 
     public boolean isEmpty() {
         return top == -1;
     }
 
-    public String readTop() {
+    public E readTop() {
         return stack[top];
     }
 
-    public String deleteElement() {
-        return stack[top--];
+    public int getTop() {
+        return top;
     }
 }

@@ -7,77 +7,99 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-    private String mathString;
-    private List<String> listOfElements = new ArrayList<>();
-    Stack stack;
+    private String sourceMathString;
+    private List<String> apartElementsOfExpression;
+    private List outputList;
+    private Stack stackForSign;
 
     public Parser(String mathString) {
-        this.mathString = mathString;
-        stack = new Stack(mathString.length());
+        this.sourceMathString = mathString;
+        this.outputList = new ArrayList(mathString.length());
+        this.stackForSign = new Stack(mathString.length());
+        this.apartElementsOfExpression = new ArrayList<>();
     }
 
-    public List separateString() {
+    public List splitExpression() {
         Pattern pattern = Pattern.compile("\\W|\\d+");
-        Matcher matcher = pattern.matcher(mathString);
+        Matcher matcher = pattern.matcher(sourceMathString);
 
         while (matcher.find()) {
-            listOfElements.add(matcher.group());
+            apartElementsOfExpression.add(matcher.group());
         }
 
-        return listOfElements;
+        return apartElementsOfExpression;
     }
 
-    public List parse() {
-        Pattern patternNumber = Pattern.compile("\\d+");
-        List<String> outputPhrase = new ArrayList<>();
+    public List<String> addSignsInEnd() {
+        while (!stackForSign.isEmpty()) {
+            outputList.add(stackForSign.pop());
+        }
+        return outputList;
+    }
 
-        for (String currentElement: listOfElements) {
+    public void evaluateMinusOrPlus(String currentElement) {
+        if (stackForSign.readTop().equals("(")) {
+            stackForSign.push(currentElement);
+        } else {
+            while (!stackForSign.isEmpty() && !stackForSign.readTop().equals("(")) {
+                outputList.add(stackForSign.pop());
+            }
+            stackForSign.push(currentElement);
+        }
+    }
+
+    public void ifFoundCloseBracket() {
+        while (!stackForSign.readTop().equals("(")) {
+            outputList.add(stackForSign.pop());
+        }
+
+        if (stackForSign.readTop().equals("(")) {
+            stackForSign.pop();
+        }
+    }
+
+    public List parseInPolishReverse() {
+
+        splitExpression();
+
+        Pattern patternNumber = Pattern.compile("\\d+");
+
+        for (String currentElement: apartElementsOfExpression) {
             Matcher matcherNumber = patternNumber.matcher(currentElement);
             if (matcherNumber.find()) {
-                outputPhrase.add(matcherNumber.group());
+                outputList.add(matcherNumber.group());
+                continue;
+            }
+
+            if (stackForSign.isEmpty()) {
+                stackForSign.push(currentElement);
             } else {
-                if (stack.isEmpty()) {
-                    stack.push(currentElement);
-                } else {
-                    switch (currentElement) {
-                        case ("+"):
-                        case ("-"):
-                            if (stack.readTop().equals("(")) {
-                                stack.push(currentElement);
-                            } else {
-                                while (!stack.isEmpty() && !stack.readTop().equals("(")) {
-                                    outputPhrase.add(stack.pop());
-                                }
-                                stack.push(currentElement);
-                            }
-                            break;
-                        case ("*"):
-                        case ("/"):
-                            stack.push(currentElement);
-                            break;
-                        case ("("):
-                            stack.push(currentElement);
-                            break;
-                        case (")"):
+                switch (currentElement) {
+                    case ("+"):
+                    case ("-"):
+                        evaluateMinusOrPlus(currentElement);
+                        break;
 
-                            while (!stack.readTop().equals("(")) {
-                                outputPhrase.add(stack.pop());
-                            }
+                    case ("*"):
+                    case ("/"):
+                        stackForSign.push(currentElement);
+                        break;
 
-                            if (stack.readTop().equals("(")) {
-                                stack.deleteElement();
-                            }
-                            break;
+                    case ("("):
+                        stackForSign.push(currentElement);
+                        break;
+
+                    case (")"):
+                        ifFoundCloseBracket();
+                        break;
                     }
                 }
             }
-        }
 
-        while (!stack.isEmpty()) {
-            String pop = stack.pop();
-            outputPhrase.add(pop);
-        }
-        return outputPhrase;
+        addSignsInEnd();
+
+        return outputList;
     }
 }
+
 
